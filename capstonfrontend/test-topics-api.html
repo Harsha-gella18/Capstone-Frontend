@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Topics API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4F46E5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #4338CA;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4F46E5;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left-color: #10B981;
+        }
+        .error {
+            border-left-color: #EF4444;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Topics API</h1>
+        
+        <div>
+            <h3>Enter Your Token:</h3>
+            <input type="text" id="token" placeholder="Paste your JWT token here" style="width: 100%;">
+        </div>
+
+        <div style="margin-top: 20px;">
+            <h3>Test Parameters:</h3>
+            <label>Class: <input type="number" id="class" value="10" min="1" max="10"></label>
+            <label>Subject: <input type="text" id="subject" value="Chemistry"></label>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button onclick="testDirectAPI()">🚀 Test Direct API</button>
+            <button onclick="testWithProxy()">🔄 Test With Proxy</button>
+            <button onclick="clearOutput()">🗑️ Clear</button>
+        </div>
+
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            
+            if (type === 'success') {
+                output.classList.add('success');
+                output.classList.remove('error');
+            } else if (type === 'error') {
+                output.classList.add('error');
+                output.classList.remove('success');
+            }
+            
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').textContent = '';
+            document.getElementById('output').className = 'output';
+        }
+
+        async function testDirectAPI() {
+            clearOutput();
+            
+            const token = document.getElementById('token').value.trim();
+            const classNum = document.getElementById('class').value;
+            const subject = document.getElementById('subject').value;
+
+            if (!token) {
+                log('❌ ERROR: Please enter your JWT token', 'error');
+                return;
+            }
+
+            log('📚 Testing Direct API Call...');
+            log(`📝 Parameters: class=${classNum}, subject=${subject}`);
+            
+            // NOTE: This test file uses a hardcoded API URL for testing purposes only
+            // In production, this URL should be replaced with your actual API Gateway URL
+            // Or better yet, configure this file to read from environment variables
+            const API_URL = 'YOUR_API_GATEWAY_URL_HERE'; // Replace with actual URL when testing
+            const url = `${API_URL}/getTopics?class=${classNum}&subject=${encodeURIComponent(subject)}`;
+            log(`🌐 URL: ${url}`);
+
+            try {
+                log('🚀 Sending request...');
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                log(`📡 Response Status: ${response.status} ${response.statusText}`);
+                log(`📋 Response Headers: ${JSON.stringify([...response.headers.entries()], null, 2)}`);
+
+                const data = await response.json();
+                log(`📦 Raw Response Data:\n${JSON.stringify(data, null, 2)}`);
+
+                if (data.body) {
+                    log(`\n🔍 Detected Lambda format with 'body' field`);
+                    log(`🔍 Type of body: ${typeof data.body}`);
+                    
+                    if (typeof data.body === 'string') {
+                        log(`\n🔄 Parsing stringified body...`);
+                        const parsed = JSON.parse(data.body);
+                        log(`✅ Parsed Body:\n${JSON.stringify(parsed, null, 2)}`);
+                        
+                        if (parsed.topics) {
+                            log(`\n✅ SUCCESS: Found ${parsed.topics.length} topics:`, 'success');
+                            parsed.topics.forEach((topic, i) => log(`  ${i + 1}. ${topic}`));
+                        } else {
+                            log(`\n⚠️ WARNING: No 'topics' field in parsed body`, 'error');
+                        }
+                    } else {
+                        log(`\n⚠️ Body is not a string, it's: ${typeof data.body}`, 'error');
+                    }
+                } else if (data.topics) {
+                    log(`\n✅ SUCCESS: Found ${data.topics.length} topics (direct format):`, 'success');
+                    data.topics.forEach((topic, i) => log(`  ${i + 1}. ${topic}`));
+                } else {
+                    log(`\n❌ ERROR: No topics found in response`, 'error');
+                }
+
+            } catch (error) {
+                log(`\n❌ ERROR: ${error.message}`, 'error');
+                log(`Error Stack: ${error.stack}`);
+            }
+        }
+
+        async function testWithProxy() {
+            clearOutput();
+            
+            const token = document.getElementById('token').value.trim();
+            const classNum = document.getElementById('class').value;
+            const subject = document.getElementById('subject').value;
+
+            if (!token) {
+                log('❌ ERROR: Please enter your JWT token', 'error');
+                return;
+            }
+
+            log('📚 Testing Proxy API Call...');
+            log(`📝 Parameters: class=${classNum}, subject=${subject}`);
+            
+            const url = `/api/getTopics?class=${classNum}&subject=${encodeURIComponent(subject)}`;
+            log(`🌐 URL: ${url} (will be proxied)`);
+
+            try {
+                log('🚀 Sending request...');
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                log(`📡 Response Status: ${response.status} ${response.statusText}`);
+
+                const data = await response.json();
+                log(`📦 Raw Response Data:\n${JSON.stringify(data, null, 2)}`);
+
+                if (data.body) {
+                    log(`\n🔍 Detected Lambda format with 'body' field`);
+                    const parsed = typeof data.body === 'string' ? JSON.parse(data.body) : data.body;
+                    log(`✅ Parsed Body:\n${JSON.stringify(parsed, null, 2)}`);
+                    
+                    if (parsed.topics) {
+                        log(`\n✅ SUCCESS: Found ${parsed.topics.length} topics:`, 'success');
+                        parsed.topics.forEach((topic, i) => log(`  ${i + 1}. ${topic}`));
+                    }
+                } else if (data.topics) {
+                    log(`\n✅ SUCCESS: Found ${data.topics.length} topics:`, 'success');
+                    data.topics.forEach((topic, i) => log(`  ${i + 1}. ${topic}`));
+                }
+
+            } catch (error) {
+                log(`\n❌ ERROR: ${error.message}`, 'error');
+                log(`Error Stack: ${error.stack}`);
+            }
+        }
+
+        // Get token from localStorage if available
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                document.getElementById('token').value = token;
+                log('✅ Token loaded from localStorage');
+            } else {
+                log('⚠️ No token found in localStorage. Please paste your token above.');
+            }
+        });
+    </script>
+</body>
+</html>
