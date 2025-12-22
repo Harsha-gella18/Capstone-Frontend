@@ -81,6 +81,8 @@ The chatbot bridges the gap between static learning resources and interactive ed
 3. Retrieved context is passed to the LLM
 4. LLM generates an accurate, contextual response
 5. Response is returned to the user in real time
+   <img width="2266" height="1263" alt="image" src="https://github.com/user-attachments/assets/2ac50671-1c9a-45f1-a449-ad239ea79eb0" />
+
 
 ---
 
