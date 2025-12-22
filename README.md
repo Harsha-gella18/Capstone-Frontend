@@ -86,13 +86,6 @@ The chatbot bridges the gap between static learning resources and interactive ed
 
 ---
 
-## 🏗️ Architecture Diagram
-
-<img width="2637" height="1308" alt="image" src="https://github.com/user-attachments/assets/612997af-f29a-4188-9b68-96f6de75ad3a" />
-
-
-
----
 
 ## ⚠️ Challenges Faced
 
@@ -106,7 +99,7 @@ The chatbot bridges the gap between static learning resources and interactive ed
 
 ## 🧩 Architecture Diagram
 
-*(Refer to project documentation / presentation for the architecture diagram)*
+<img width="2637" height="1308" alt="image" src="https://github.com/user-attachments/assets/612997af-f29a-4188-9b68-96f6de75ad3a" />
 
 
 ---
