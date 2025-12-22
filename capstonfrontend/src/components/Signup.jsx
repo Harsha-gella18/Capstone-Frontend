@@ -130,37 +130,37 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-noir-950 dark:via-noir-900 dark:to-noir-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white dark:bg-noir-900 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-800 p-10 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-strong border border-gray-200 p-10 relative overflow-hidden">
         {/* Decorative element */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gray-400 via-gray-600 to-gray-400 dark:from-gray-600 dark:via-gray-400 dark:to-gray-600"></div>
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#2563EB] to-[#1E40AF]"></div>
         
         {/* Header */}
         <div className="text-center mb-8">
           <button
             onClick={onBack}
-            className="absolute top-6 left-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition duration-300 hover:scale-110"
+            className="absolute top-6 left-6 text-[#64748B] hover:text-[#0F172A] transition duration-200"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="text-4xl font-black text-gray-900 dark:text-white mb-3 tracking-tight">EduBot</h1>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create Your Account</h2>
-          <p className="text-gray-600 dark:text-gray-400 font-medium">Join thousands of learners already using EduBot</p>
+          <h1 className="text-4xl font-heading font-black text-[#0F172A] mb-3 tracking-tight">EduBot</h1>
+          <h2 className="text-2xl font-heading font-bold text-[#0F172A] mb-2">Create Your Account</h2>
+          <p className="text-[#64748B] font-medium">Join thousands of learners already using EduBot</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-            <p className="text-red-600 dark:text-red-400 text-sm font-medium">{error}</p>
+          <div className="mb-4 p-4 bg-[#FEE2E2] border-l-4 border-[#DC2626] rounded-xl">
+            <p className="text-[#DC2626] text-sm font-medium">{error}</p>
           </div>
         )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+            <label htmlFor="name" className="block text-sm font-semibold text-[#0F172A] mb-1">
               Full Name
             </label>
             <input
@@ -169,13 +169,13 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               type="text"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
               placeholder="Enter your full name"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+            <label htmlFor="email" className="block text-sm font-semibold text-[#0F172A] mb-1">
               Email Address
             </label>
             <input
@@ -185,13 +185,13 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
               placeholder="john.doe@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="phone" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+            <label htmlFor="phone" className="block text-sm font-semibold text-[#0F172A] mb-1">
               Phone Number
             </label>
             <input
@@ -200,14 +200,14 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
               placeholder="+911234567890"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="class" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+              <label htmlFor="class" className="block text-sm font-semibold text-[#0F172A] mb-1">
                 Class
               </label>
               <input
@@ -216,12 +216,12 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
                 type="text"
                 value={formData.class}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+                className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
                 placeholder="10"
               />
             </div>
             <div>
-              <label htmlFor="role" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+              <label htmlFor="role" className="block text-sm font-semibold text-[#0F172A] mb-1">
                 Role
               </label>
               <select
@@ -229,7 +229,7 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white font-medium"
+                className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] font-medium"
               >
                 <option value="STUDENT">Student</option>
                 <option value="ADMIN">Admin</option>
@@ -238,7 +238,7 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+            <label htmlFor="password" className="block text-sm font-semibold text-[#0F172A] mb-1">
               Password
             </label>
             <input
@@ -247,13 +247,13 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
               placeholder="At least 8 characters"
             />
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
+            <label htmlFor="confirmPassword" className="block text-sm font-semibold text-[#0F172A] mb-1">
               Confirm Password
             </label>
             <input
@@ -262,7 +262,7 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-noir-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition duration-300 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 font-medium"
+              className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
               placeholder="Re-enter your password"
             />
           </div>
@@ -273,15 +273,15 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
               type="checkbox"
               checked={acceptTerms}
               onChange={(e) => setAcceptTerms(e.target.checked)}
-              className="h-4 w-4 text-gray-900 dark:text-white focus:ring-gray-500 dark:focus:ring-gray-400 border-gray-300 dark:border-gray-600 rounded mt-1"
+              className="h-4 w-4 text-[#2563EB] focus:ring-[#2563EB] border-gray-300 rounded mt-1"
             />
-            <label htmlFor="acceptTerms" className="ml-3 text-sm text-gray-600 dark:text-gray-400 font-medium">
+            <label htmlFor="acceptTerms" className="ml-3 text-sm text-[#64748B] font-medium">
               I agree to the{' '}
-              <button type="button" className="text-gray-900 dark:text-white hover:text-black dark:hover:text-gray-200 font-bold">
+              <button type="button" className="text-[#2563EB] hover:text-[#1E40AF] font-semibold">
                 Terms and Conditions
               </button>
               {' '}and{' '}
-              <button type="button" className="text-gray-900 dark:text-white hover:text-black dark:hover:text-gray-200 font-bold">
+              <button type="button" className="text-[#2563EB] hover:text-[#1E40AF] font-semibold">
                 Privacy Policy
               </button>
             </label>
@@ -290,11 +290,11 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gray-900 dark:bg-white hover:bg-black dark:hover:bg-gray-100 disabled:bg-gray-400 dark:disabled:bg-gray-600 text-white dark:text-gray-900 py-4 px-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none shadow-lg hover:shadow-2xl"
+            className="w-full bg-gradient-to-r from-[#2563EB] to-[#1E40AF] hover:shadow-strong disabled:opacity-50 text-white py-4 px-4 rounded-xl font-bold text-lg transition-all duration-200 shadow-medium"
           >
             {loading ? (
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white dark:border-gray-900 mr-2"></div>
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
                 Creating Account...
               </div>
             ) : (
@@ -305,11 +305,11 @@ const Signup = ({ onAuthSuccess, onBack, onSwitchToLogin }) => {
 
         {/* Login Link */}
         <div className="mt-8 text-center">
-          <p className="text-gray-600 dark:text-gray-400 font-medium">
+          <p className="text-[#64748B] font-medium">
             Already have an account?{' '}
             <button
               onClick={onSwitchToLogin}
-              className="text-gray-900 dark:text-white hover:text-black dark:hover:text-gray-200 font-bold transition duration-300 underline underline-offset-2"
+              className="text-[#2563EB] hover:text-[#1E40AF] font-bold transition duration-200 underline underline-offset-2"
             >
               Sign in
             </button>

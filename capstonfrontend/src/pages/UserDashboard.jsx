@@ -3,7 +3,7 @@ import { createThread, getHomeThreads, getThreadMessages, sendUserQuery, getTopi
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
+const UserDashboard = ({ onLogout }) => {
   const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -152,34 +152,34 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
   };
 
   return (
-    <div className={`flex flex-col h-screen ${darkMode ? 'bg-noir-950' : 'bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'}`}>
+    <div className="flex flex-col h-screen bg-[#F8FAFC]">
       {/* Top Navbar */}
-      <nav className={`${darkMode ? 'bg-noir-900 border-noir-800' : 'bg-white/80 backdrop-blur-xl border-gray-200/50'} border-b shadow-lg z-50`}>
+      <nav className="bg-white border-b border-gray-200 shadow-soft z-50">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo & User Info */}
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-3">
-                <div className={`w-10 h-10 ${darkMode ? 'bg-gradient-to-br from-gray-700 to-gray-900' : 'bg-gradient-to-br from-gray-900 to-black'} rounded-2xl flex items-center justify-center shadow-xl`}>
+                <div className="w-10 h-10 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-xl flex items-center justify-center shadow-medium">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
-                <h1 className={`text-2xl font-black tracking-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                <h1 className="text-2xl font-heading font-bold tracking-tight text-[#0F172A]">
                   EduBot AI
                 </h1>
               </div>
               
               {userData && (
-                <div className={`flex items-center space-x-3 px-4 py-2 rounded-2xl ${darkMode ? 'bg-noir-800 border border-noir-700' : 'bg-gray-50 border border-gray-200'}`}>
-                  <div className={`w-8 h-8 rounded-full ${darkMode ? 'bg-gradient-to-br from-gray-600 to-gray-800' : 'bg-gradient-to-br from-gray-700 to-black'} flex items-center justify-center text-white font-black text-sm shadow-md`}>
+                <div className="flex items-center space-x-3 px-4 py-2 rounded-xl bg-[#F1F5F9] border border-gray-200">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2563EB] to-[#1E40AF] flex items-center justify-center text-white font-bold text-sm shadow-soft">
                     {userData.name?.charAt(0).toUpperCase() || 'S'}
                   </div>
                   <div className="flex flex-col">
-                    <p className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    <p className="text-sm font-semibold text-[#0F172A]">
                       {userData.name || 'Student'}
                     </p>
-                    <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <p className="text-xs text-[#64748B]">
                       {userData.email}
                     </p>
                   </div>
@@ -192,7 +192,7 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
               {/* Create Thread Button */}
               <button
                 onClick={() => setShowCreateModal(true)}
-                className={`${darkMode ? 'bg-white text-gray-900 hover:bg-gray-100' : 'bg-gray-900 text-white hover:bg-black'} px-6 py-2.5 rounded-xl transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105 font-bold`}
+                className="bg-[#2563EB] text-white hover:bg-[#1E40AF] px-6 py-2.5 rounded-xl transition-all duration-200 flex items-center space-x-2 shadow-medium hover:shadow-strong transform hover:-translate-y-0.5 font-semibold"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -200,27 +200,10 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                 <span>New Thread</span>
               </button>
 
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2.5 rounded-xl transition-all duration-300 ${darkMode ? 'bg-noir-800 text-yellow-400 hover:bg-noir-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} hover:scale-110 shadow-md`}
-                title={darkMode ? 'Light Mode' : 'Dark Mode'}
-              >
-                {darkMode ? (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )}
-              </button>
-
               {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className={`p-2.5 rounded-xl transition-all duration-300 ${darkMode ? 'text-red-400 hover:bg-red-900/20' : 'text-red-500 hover:bg-red-50'} hover:scale-110 shadow-md`}
+                className="p-2.5 rounded-xl transition-all duration-200 text-[#DC2626] hover:bg-[#FEE2E2] shadow-soft"
                 title="Logout"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,10 +218,10 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
       {/* Left Sidebar */}
-      <div className={`w-80 ${darkMode ? 'bg-noir-900 border-noir-800' : 'bg-white/60 backdrop-blur-xl border-gray-200/70'} border-r flex flex-col shadow-xl`}>
+      <div className="w-80 bg-[#F1F5F9] border-r border-gray-200 flex flex-col shadow-soft">
         {/* Sidebar Header */}
-        <div className={`p-4 ${darkMode ? 'border-noir-800' : 'border-gray-200/60'} border-b`}>
-          <h2 className={`text-xs font-black uppercase tracking-wider ${darkMode ? 'text-gray-500' : 'text-gray-600'}`}>
+        <div className="p-4 border-b border-gray-200">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-[#64748B]">
             Your Conversations
           </h2>
         </div>
@@ -249,24 +232,24 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
           {threadsLoading ? (
             <div className="flex justify-center items-center py-12">
               <div className="relative">
-                <div className={`animate-spin rounded-full h-12 w-12 border-4 ${darkMode ? 'border-gray-800 border-t-gray-400' : 'border-gray-200 border-t-gray-900'}`}></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#DBEAFE] border-t-[#2563EB]"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className={`w-6 h-6 ${darkMode ? 'bg-gradient-to-r from-gray-500 to-gray-300' : 'bg-gradient-to-r from-gray-700 to-black'} rounded-full animate-pulse`}></div>
+                  <div className="w-6 h-6 bg-gradient-to-r from-[#2563EB] to-[#1E40AF] rounded-full animate-pulse"></div>
                 </div>
               </div>
             </div>
           ) : threads.length === 0 ? (
-            <div className={`text-center py-16 ${darkMode ? 'bg-noir-900/50' : 'bg-gradient-to-br from-gray-50 to-white'} rounded-2xl border-2 border-dashed ${darkMode ? 'border-noir-800' : 'border-gray-300'} shadow-lg`}>
+            <div className="text-center py-16 bg-white rounded-2xl border-2 border-dashed border-gray-300 shadow-soft">
               <div className="relative inline-block">
-                <div className={`w-20 h-20 ${darkMode ? 'bg-gradient-to-br from-noir-800 to-noir-900' : 'bg-gradient-to-br from-gray-100 to-gray-50'} rounded-full flex items-center justify-center mb-4 shadow-lg`}>
-                  <svg className={`w-10 h-10 ${darkMode ? 'text-gray-400' : 'text-gray-700'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 bg-gradient-to-br from-[#DBEAFE] to-[#F1F5F9] rounded-full flex items-center justify-center mb-4 shadow-medium">
+                  <svg className="w-10 h-10 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
-                <div className={`absolute -top-2 -right-2 w-6 h-6 ${darkMode ? 'bg-gray-500' : 'bg-gray-800'} rounded-full animate-bounce`}></div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#2563EB] rounded-full animate-bounce"></div>
               </div>
-              <p className={`text-sm font-bold ${darkMode ? 'text-gray-300' : 'text-gray-800'}`}>No conversations yet</p>
-              <p className={`text-xs mt-1 ${darkMode ? 'text-gray-600' : 'text-gray-500'}`}>Start learning by creating your first thread!</p>
+              <p className="text-sm font-semibold text-[#0F172A]">No conversations yet</p>
+              <p className="text-xs mt-1 text-[#64748B]">Start learning by creating your first thread!</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -274,47 +257,45 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                 <button
                   key={thread.thread_id}
                   onClick={() => loadThreadMessages(thread)}
-                  className={`group w-full text-left p-4 rounded-2xl transition-all duration-300 transform hover:scale-102 ${
+                  className={`group w-full text-left p-4 rounded-xl transition-all duration-200 ${
                     activeThread?.thread_id === thread.thread_id
-                      ? `${darkMode ? 'bg-gradient-to-br from-noir-800 to-noir-900 border-2 border-gray-500 shadow-2xl' : 'bg-gradient-to-br from-gray-900 to-black text-white border-2 border-gray-800 shadow-2xl'}`
-                      : `${darkMode ? 'bg-noir-900/50 hover:bg-noir-800/80 border border-noir-700' : 'bg-white hover:bg-gray-50 border border-gray-300'} hover:shadow-xl`
+                      ? 'bg-gradient-to-br from-[#2563EB] to-[#1E40AF] text-white shadow-strong border-2 border-[#1E40AF]'
+                      : 'bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-[#DBEAFE] hover:shadow-medium'
                   }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-2 mb-2">
-                        <div className={`w-8 h-8 rounded-xl ${
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                           activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'bg-gradient-to-br from-gray-600 to-gray-800' : 'bg-gradient-to-br from-white to-gray-100'}`
-                            : `${darkMode ? 'bg-gradient-to-br from-gray-600 to-gray-800' : 'bg-gradient-to-br from-gray-700 to-gray-900'}`
-                        } flex items-center justify-center shadow-md`}>
-                          <svg className={`w-4 h-4 ${activeThread?.thread_id === thread.thread_id && !darkMode ? 'text-gray-900' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            ? 'bg-white/20'
+                            : 'bg-[#DBEAFE]'
+                        }`}>
+                          <svg className={`w-4 h-4 ${activeThread?.thread_id === thread.thread_id ? 'text-white' : 'text-[#2563EB]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                           </svg>
                         </div>
-                        <p className={`text-sm font-bold truncate ${
-                          activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'text-white' : 'text-white'}`
-                            : `${darkMode ? 'text-white' : 'text-gray-900'}`
+                        <p className={`text-sm font-semibold truncate ${
+                          activeThread?.thread_id === thread.thread_id ? 'text-white' : 'text-[#0F172A]'
                         }`}>
                           {thread.topic}
                         </p>
                       </div>
                       <div className="flex items-center flex-wrap gap-2 mt-2">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm ${
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium ${
                           activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'bg-noir-800 text-gray-300 border border-noir-700' : 'bg-white/20 text-white border border-white/30'}`
-                            : `${darkMode ? 'bg-noir-800 text-gray-300 border border-noir-700' : 'bg-gray-50 text-gray-700 border border-gray-200'}`
+                            ? 'bg-white/20 text-white'
+                            : 'bg-[#F1F5F9] text-[#334155]'
                         }`}>
                           <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
                           </svg>
                           Class {thread.class}
                         </span>
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm ${
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium ${
                           activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'bg-noir-800 text-gray-300 border border-noir-700' : 'bg-white/20 text-white border border-white/30'}`
-                            : `${darkMode ? 'bg-noir-800 text-gray-300 border border-noir-700' : 'bg-gray-50 text-gray-700 border border-gray-200'}`
+                            ? 'bg-white/20 text-white'
+                            : 'bg-[#F1F5F9] text-[#334155]'
                         }`}>
                           <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
@@ -324,16 +305,12 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                       </div>
                       <div className="flex items-center mt-2 space-x-2">
                         <svg className={`w-3 h-3 ${
-                          activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'text-gray-600' : 'text-white/60'}`
-                            : `${darkMode ? 'text-gray-600' : 'text-gray-400'}`
+                          activeThread?.thread_id === thread.thread_id ? 'text-white/70' : 'text-[#64748B]'
                         }`} fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                         </svg>
                         <p className={`text-xs ${
-                          activeThread?.thread_id === thread.thread_id
-                            ? `${darkMode ? 'text-gray-600' : 'text-white/70'}`
-                            : `${darkMode ? 'text-gray-600' : 'text-gray-500'}`
+                          activeThread?.thread_id === thread.thread_id ? 'text-white/80' : 'text-[#64748B]'
                         }`}>
                           {new Date(thread.last_updated || thread.created_at).toLocaleDateString()}
                         </p>
@@ -341,7 +318,7 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                     </div>
                     {activeThread?.thread_id === thread.thread_id && (
                       <div className="ml-2">
-                        <div className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                       </div>
                     )}
                   </div>
@@ -357,31 +334,31 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
         {activeThread ? (
           <>
             {/* Chat Header */}
-            <div className={`${darkMode ? 'bg-noir-900 border-noir-700' : 'bg-white/80 backdrop-blur-xl border-gray-200/60'} border-b p-4 shadow-lg transition-colors duration-300`}>
+            <div className="bg-white border-b border-gray-200 p-4 shadow-soft">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{activeThread.topic}</h2>
+                  <h2 className="text-xl font-heading font-bold text-[#0F172A]">{activeThread.topic}</h2>
                   <div className="flex items-center space-x-3 mt-1">
-                    <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Class {activeThread.class}</span>
-                    <span className={`${darkMode ? 'text-gray-600' : 'text-gray-400'}`}>•</span>
-                    <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>{activeThread.subject}</span>
+                    <span className="text-sm text-[#334155] font-medium">Class {activeThread.class}</span>
+                    <span className="text-[#CBD5E1]">•</span>
+                    <span className="text-sm text-[#334155] font-medium">{activeThread.subject}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Messages Area */}
-            <div className={`flex-1 overflow-y-auto p-4 ${darkMode ? 'bg-noir-950' : 'bg-gradient-to-b from-gray-50 to-gray-100'} transition-colors duration-300`}>
+            <div className="flex-1 overflow-y-auto p-6 bg-[#F8FAFC] custom-scrollbar">
               {loading ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className={`animate-spin rounded-full h-12 w-12 border-b-2 ${darkMode ? 'border-white' : 'border-gray-900'}`}></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#DBEAFE] border-t-[#2563EB]"></div>
                 </div>
               ) : messages.length === 0 ? (
-                <div className={`flex flex-col items-center justify-center h-full ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  <svg className="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex flex-col items-center justify-center h-full text-[#64748B]">
+                  <svg className="w-16 h-16 mb-4 text-[#CBD5E1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
-                  <p className="text-lg font-medium">Start a conversation</p>
+                  <p className="text-lg font-semibold text-[#334155]">Start a conversation</p>
                   <p className="text-sm">Ask a question to begin learning!</p>
                 </div>
               ) : (
@@ -392,20 +369,16 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                       className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-2xl rounded-2xl p-4 shadow-lg ${
+                        className={`max-w-2xl rounded-xl p-5 ${
                           msg.sender === 'user'
-                            ? darkMode 
-                              ? 'bg-noir-900 text-white border border-noir-700' 
-                              : 'bg-gradient-to-br from-gray-900 to-black text-white'
-                            : darkMode
-                              ? 'bg-noir-800 text-gray-100 border border-noir-700'
-                              : 'bg-white text-gray-900 border-2 border-gray-200'
-                        } transition-all duration-300`}
+                            ? 'bg-gradient-to-br from-[#2563EB] to-[#1E40AF] text-white shadow-medium'
+                            : 'bg-white text-[#334155] shadow-soft border border-gray-200'
+                        }`}
                       >
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start space-x-3">
                           {msg.sender === 'ai' && (
-                            <div className={`flex-shrink-0 w-8 h-8 rounded-xl ${darkMode ? 'bg-noir-700' : 'bg-gradient-to-br from-gray-100 to-gray-200'} flex items-center justify-center shadow-md`}>
-                              <svg className={`w-5 h-5 ${darkMode ? 'text-white' : 'text-gray-900'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#DBEAFE] to-[#93C5FD] flex items-center justify-center shadow-sm">
+                              <svg className="w-5 h-5 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                               </svg>
                             </div>
@@ -419,86 +392,86 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                                     // Style tables
                                     table: ({node, ...props}) => (
                                       <div className="overflow-x-auto my-4">
-                                        <table className={`min-w-full divide-y ${darkMode ? 'divide-noir-700 border-noir-700' : 'divide-gray-300 border-gray-300'} border`} {...props} />
+                                        <table className="min-w-full divide-y divide-gray-200 border border-gray-200" {...props} />
                                       </div>
                                     ),
                                     thead: ({node, ...props}) => (
-                                      <thead className={darkMode ? 'bg-noir-900' : 'bg-gray-50'} {...props} />
+                                      <thead className="bg-[#F8FAFC]" {...props} />
                                     ),
                                     th: ({node, ...props}) => (
-                                      <th className={`px-4 py-3 text-left text-xs font-semibold ${darkMode ? 'text-gray-100 border-noir-700' : 'text-gray-900 border-gray-300'} uppercase tracking-wider border-b`} {...props} />
+                                      <th className="px-4 py-3 text-left text-xs font-semibold text-[#0F172A] border-b-2 border-gray-200 uppercase tracking-wider" {...props} />
                                     ),
                                     td: ({node, ...props}) => (
-                                      <td className={`px-4 py-3 text-sm ${darkMode ? 'text-gray-300 border-noir-700' : 'text-gray-700 border-gray-200'} border-b`} {...props} />
+                                      <td className="px-4 py-3 text-sm text-[#334155] border-b border-gray-100" {...props} />
                                     ),
                                     tbody: ({node, ...props}) => (
-                                      <tbody className={`${darkMode ? 'bg-noir-800 divide-noir-700' : 'bg-white divide-gray-200'} divide-y`} {...props} />
+                                      <tbody className="bg-white divide-y divide-gray-100" {...props} />
                                     ),
                                     // Style headers
                                     h1: ({node, ...props}) => (
-                                      <h1 className={`text-2xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-900'} mt-6 mb-4`} {...props} />
+                                      <h1 className="text-2xl font-heading font-bold text-[#0F172A] mt-6 mb-4" {...props} />
                                     ),
                                     h2: ({node, ...props}) => (
-                                      <h2 className={`text-xl font-bold ${darkMode ? 'text-gray-100' : 'text-gray-900'} mt-5 mb-3`} {...props} />
+                                      <h2 className="text-xl font-heading font-bold text-[#0F172A] mt-5 mb-3" {...props} />
                                     ),
                                     h3: ({node, ...props}) => (
-                                      <h3 className={`text-lg font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-900'} mt-4 mb-2`} {...props} />
+                                      <h3 className="text-lg font-heading font-semibold text-[#0F172A] mt-4 mb-2" {...props} />
                                     ),
                                     // Style lists
                                     ul: ({node, ...props}) => (
-                                      <ul className="list-disc list-inside space-y-1 my-3" {...props} />
+                                      <ul className="list-disc list-inside space-y-2 my-3" {...props} />
                                     ),
                                     ol: ({node, ...props}) => (
-                                      <ol className="list-decimal list-inside space-y-1 my-3" {...props} />
+                                      <ol className="list-decimal list-inside space-y-2 my-3" {...props} />
                                     ),
                                     li: ({node, ...props}) => (
-                                      <li className={darkMode ? 'text-gray-300' : 'text-gray-700'} {...props} />
+                                      <li className="text-[#334155]" {...props} />
                                     ),
                                     // Style paragraphs
                                     p: ({node, ...props}) => (
-                                      <p className={`${darkMode ? 'text-gray-300' : 'text-gray-700'} my-2 leading-relaxed`} {...props} />
+                                      <p className="text-[#334155] my-2 leading-relaxed" {...props} />
                                     ),
                                     // Style code blocks
                                     code: ({node, inline, ...props}) => 
                                       inline ? (
-                                        <code className={`${darkMode ? 'bg-noir-900 text-gray-300' : 'bg-gray-100 text-gray-900'} px-1.5 py-0.5 rounded text-sm font-mono`} {...props} />
+                                        <code className="bg-[#F1F5F9] text-[#0F172A] px-1.5 py-0.5 rounded text-sm font-mono font-medium border border-gray-200" {...props} />
                                       ) : (
-                                        <code className={`block ${darkMode ? 'bg-black text-gray-100' : 'bg-gray-900 text-gray-100'} p-4 rounded-lg overflow-x-auto text-sm font-mono my-3`} {...props} />
+                                        <code className="block bg-[#0F172A] text-[#E5E7EB] p-4 rounded-xl overflow-x-auto text-sm font-mono my-3 shadow-soft" {...props} />
                                       ),
                                     // Style blockquotes
                                     blockquote: ({node, ...props}) => (
-                                      <blockquote className={`border-l-4 ${darkMode ? 'border-gray-400 text-gray-400' : 'border-gray-500 text-gray-600'} pl-4 italic my-3`} {...props} />
+                                      <blockquote className="border-l-4 border-[#2563EB] bg-[#DBEAFE] text-[#334155] pl-4 pr-4 py-3 rounded-r-lg italic my-3" {...props} />
                                     ),
                                     // Style links
                                     a: ({node, ...props}) => (
-                                      <a className={`${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'} underline`} {...props} />
+                                      <a className="text-[#2563EB] hover:text-[#1E40AF] underline font-medium" {...props} />
                                     ),
                                     // Style horizontal rules
                                     hr: ({node, ...props}) => (
-                                      <hr className={`my-6 ${darkMode ? 'border-noir-700' : 'border-gray-300'}`} {...props} />
+                                      <hr className="my-6 border-gray-200" {...props} />
                                     ),
                                     // Style strong/bold
                                     strong: ({node, ...props}) => (
-                                      <strong className={`font-bold ${darkMode ? 'text-gray-100' : 'text-gray-900'}`} {...props} />
+                                      <strong className="font-bold text-[#0F172A]" {...props} />
                                     ),
                                     // Style emphasis/italic
                                     em: ({node, ...props}) => (
-                                      <em className={`italic ${darkMode ? 'text-gray-300' : 'text-gray-700'}`} {...props} />
+                                      <em className="italic text-[#334155]" {...props} />
                                     ),
                                   }}
                                 >
                                   {msg.message}
                                 </ReactMarkdown>
                                 {msg.isStreaming && (
-                                  <span className={`inline-block w-2 h-4 ml-1 ${darkMode ? 'bg-white' : 'bg-black'} animate-pulse`}></span>
+                                  <span className="inline-block w-2 h-4 ml-1 bg-[#2563EB] animate-pulse"></span>
                                 )}
                               </div>
                             ) : (
-                              <p className="text-sm whitespace-pre-wrap">
+                              <p className="text-sm whitespace-pre-wrap leading-relaxed">
                                 {msg.message}
                               </p>
                             )}
-                            <p className={`text-xs mt-1 ${msg.sender === 'user' ? (darkMode ? 'text-gray-400' : 'text-gray-300') : (darkMode ? 'text-gray-500' : 'text-gray-500')}`}>
+                            <p className={`text-xs mt-2 ${msg.sender === 'user' ? 'text-white/70' : 'text-[#64748B]'}`}>
                               {new Date(msg.timestamp).toLocaleTimeString()}
                             </p>
                           </div>
@@ -513,13 +486,13 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 
             {/* Error Message */}
             {error && (
-              <div className={`px-4 py-2 ${darkMode ? 'bg-red-950 border-red-900' : 'bg-red-50 border-red-200'} border-t transition-colors duration-300`}>
-                <p className={`${darkMode ? 'text-red-300' : 'text-red-600'} text-sm`}>{error}</p>
+              <div className="px-4 py-3 bg-[#FEE2E2] border-t-2 border-[#DC2626]">
+                <p className="text-[#DC2626] text-sm font-medium">{error}</p>
               </div>
             )}
 
             {/* Message Input */}
-            <div className={`${darkMode ? 'bg-noir-900 border-noir-700' : 'bg-white/80 backdrop-blur-xl border-gray-200/60'} border-t p-4 shadow-2xl transition-colors duration-300`}>
+            <div className="bg-white border-t border-gray-200 p-5 shadow-strong">
               <form onSubmit={handleSendMessage} className="flex space-x-4">
                 <input
                   type="text"
@@ -527,16 +500,16 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                   onChange={(e) => setMessageInput(e.target.value)}
                   placeholder="Ask a question..."
                   disabled={sendingMessage}
-                  className={`flex-1 px-4 py-3 border-2 ${darkMode ? 'bg-noir-800 border-noir-700 text-white placeholder-gray-500 focus:ring-white focus:border-white' : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 focus:ring-gray-900 focus:border-gray-900'} rounded-xl focus:ring-2 disabled:opacity-50 transition-all duration-300 shadow-sm`}
+                  className="flex-1 px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] placeholder-[#64748B] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] disabled:opacity-50 disabled:bg-gray-50 transition-all duration-200 shadow-soft"
                 />
                 <button
                   type="submit"
                   disabled={!messageInput.trim() || sendingMessage}
-                  className={`${darkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-gradient-to-r from-gray-900 to-black text-white hover:from-gray-800 hover:to-gray-900'} px-6 py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2 font-bold shadow-lg hover:shadow-xl`}
+                  className="bg-gradient-to-r from-[#2563EB] to-[#1E40AF] text-white px-8 py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 flex items-center space-x-2 font-semibold shadow-medium hover:shadow-strong hover:-translate-y-0.5"
                 >
                   {sendingMessage ? (
                     <>
-                      <div className={`animate-spin rounded-full h-5 w-5 border-b-2 ${darkMode ? 'border-black' : 'border-white'}`}></div>
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                       <span>Sending...</span>
                     </>
                   ) : (
@@ -552,13 +525,13 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
             </div>
           </>
         ) : (
-          <div className={`flex-1 flex items-center justify-center ${darkMode ? 'bg-noir-950' : 'bg-gradient-to-b from-gray-50 to-gray-100'} transition-colors duration-300`}>
+          <div className="flex-1 flex items-center justify-center bg-[#F8FAFC]">
             <div className="text-center">
-              <svg className={`mx-auto h-24 w-24 ${darkMode ? 'text-gray-600' : 'text-gray-700'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="mx-auto h-24 w-24 text-[#CBD5E1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
-              <h3 className={`mt-4 text-lg font-bold ${darkMode ? 'text-gray-200' : 'text-gray-900'}`}>Welcome to EduBot!</h3>
-              <p className={`mt-2 text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Select a thread or create a new one to start learning</p>
+              <h3 className="mt-4 text-lg font-heading font-bold text-[#0F172A]">Welcome to EduBot!</h3>
+              <p className="mt-2 text-sm text-[#64748B]">Select a thread or create a new one to start learning</p>
             </div>
           </div>
         )}
@@ -576,7 +549,6 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
           }}
           classOptions={classOptions}
           subjectOptions={subjectOptions}
-          darkMode={darkMode}
         />
       )}
     </div>
@@ -584,7 +556,7 @@ const UserDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 };
 
 // Create Thread Modal Component
-const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, darkMode }) => {
+const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions }) => {
   const [formData, setFormData] = useState({
     class: '',
     subject: '',
@@ -661,13 +633,13 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className={`${darkMode ? 'bg-noir-900' : 'bg-white'} rounded-xl shadow-xl max-w-md w-full p-6 transition-colors duration-300`}>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Create New Thread</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl shadow-strong max-w-md w-full p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-heading font-bold text-[#0F172A]">Create New Thread</h2>
           <button
             onClick={onClose}
-            className={`${darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'} transition`}
+            className="text-[#64748B] hover:text-[#0F172A] transition-colors p-2 rounded-lg hover:bg-gray-100"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -676,22 +648,22 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
         </div>
 
         {error && (
-          <div className={`mb-4 p-3 ${darkMode ? 'bg-red-950 border-red-900' : 'bg-red-50 border-red-200'} border rounded-lg transition-colors duration-300`}>
-            <p className={`${darkMode ? 'text-red-300' : 'text-red-600'} text-sm`}>{error}</p>
+          <div className="mb-4 p-4 bg-[#FEE2E2] border-l-4 border-[#DC2626] rounded-lg">
+            <p className="text-[#DC2626] text-sm font-medium">{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="class" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-              Class <span className="text-red-500">*</span>
+            <label htmlFor="class" className="block text-sm font-semibold text-[#0F172A] mb-2">
+              Class <span className="text-[#DC2626]">*</span>
             </label>
             <select
               id="class"
               name="class"
               value={formData.class}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition-colors duration-300`}
+              className="w-full px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] transition-all shadow-soft"
               required
             >
               <option value="">Select Class</option>
@@ -702,15 +674,15 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
           </div>
 
           <div>
-            <label htmlFor="subject" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-              Subject <span className="text-red-500">*</span>
+            <label htmlFor="subject" className="block text-sm font-semibold text-[#0F172A] mb-2">
+              Subject <span className="text-[#DC2626]">*</span>
             </label>
             <select
               id="subject"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition-colors duration-300`}
+              className="w-full px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] transition-all shadow-soft"
               required
             >
               <option value="">Select Subject</option>
@@ -721,8 +693,8 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
           </div>
 
           <div>
-            <label htmlFor="topic" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
-              Topic / Chapter <span className="text-red-500">*</span>
+            <label htmlFor="topic" className="block text-sm font-semibold text-[#0F172A] mb-2">
+              Topic / Chapter <span className="text-[#DC2626]">*</span>
             </label>
             <select
               id="topic"
@@ -730,7 +702,7 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
               value={formData.topic}
               onChange={handleChange}
               disabled={!formData.class || !formData.subject || loadingTopics}
-              className={`w-full px-4 py-2 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white focus:ring-white focus:border-white disabled:bg-noir-950' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black disabled:bg-gray-100'} rounded-lg focus:ring-2 disabled:cursor-not-allowed transition-colors duration-300`}
+              className="w-full px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] disabled:bg-gray-50 disabled:cursor-not-allowed transition-all shadow-soft"
               required
             >
               <option value="">
@@ -749,8 +721,8 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
               ))}
             </select>
             {loadingTopics && (
-              <div className={`mt-2 flex items-center text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                <div className={`animate-spin rounded-full h-4 w-4 border-b-2 ${darkMode ? 'border-white' : 'border-black'} mr-2`}></div>
+              <div className="mt-2 flex items-center text-sm text-[#64748B]">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#DBEAFE] border-t-[#2563EB] mr-2"></div>
                 Loading topics...
               </div>
             )}
@@ -760,14 +732,14 @@ const CreateThreadModal = ({ onClose, onSuccess, classOptions, subjectOptions, d
             <button
               type="button"
               onClick={onClose}
-              className={`flex-1 px-4 py-2 border ${darkMode ? 'border-noir-700 text-gray-300 hover:bg-noir-800' : 'border-gray-300 text-gray-700 hover:bg-gray-50'} rounded-lg transition duration-200 font-medium`}
+              className="flex-1 px-4 py-3 border-2 border-gray-200 text-[#334155] hover:bg-gray-50 rounded-xl transition-all duration-200 font-semibold"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className={`flex-1 ${darkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} px-4 py-2 rounded-lg disabled:opacity-40 transition duration-200 font-medium`}
+              className="flex-1 bg-gradient-to-r from-[#2563EB] to-[#1E40AF] text-white px-4 py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold shadow-medium hover:shadow-strong"
             >
               {loading ? 'Creating...' : 'Create Thread'}
             </button>

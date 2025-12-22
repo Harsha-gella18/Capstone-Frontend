@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { uploadContent, getUploadHistory } from '../utils/api';
 
-const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
+const AdminDashboard = ({ onLogout }) => {
   const [formData, setFormData] = useState({
     class: '',
     subject: '',
@@ -205,18 +205,18 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-noir-950' : 'bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'} transition-colors duration-300`}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 transition-colors duration-300">
       {/* Navbar */}
-      <nav className={`${darkMode ? 'bg-noir-900 border-noir-800' : 'bg-white/80 backdrop-blur-xl border-gray-200/50'} shadow-lg sticky top-0 z-50 border-b transition-colors duration-300`}>
+      <nav className="bg-white/80 backdrop-blur-xl border-gray-200/50 shadow-lg sticky top-0 z-50 border-b transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
             <div className="flex items-center">
               <div className="flex items-center space-x-2">
-                <svg className={`w-8 h-8 ${darkMode ? 'text-white' : 'text-black'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-                <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>EduBot Admin</h1>
+                <h1 className="text-2xl font-bold text-black">EduBot Admin</h1>
               </div>
             </div>
             
@@ -224,44 +224,21 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
             <div className="flex items-center space-x-3">
               {/* Profile Info */}
               {userData && (
-                <div className={`flex items-center space-x-2 px-3 py-2 ${darkMode ? 'bg-noir-800 border-noir-700' : 'bg-gray-100 border-gray-200'} rounded-lg border transition-colors duration-300`}>
-                  <svg className={`w-6 h-6 ${darkMode ? 'text-white' : 'text-black'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center space-x-2 px-3 py-2 bg-gray-100 border-gray-200 rounded-lg border transition-colors duration-300">
+                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   <div className="text-left">
-                    <p className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>{userData.name || 'Admin'}</p>
-                    <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{userData.role || 'ADMIN'}</p>
+                    <p className="text-sm font-semibold text-gray-900">{userData.name || 'Admin'}</p>
+                    <p className="text-xs text-gray-500">{userData.role || 'ADMIN'}</p>
                   </div>
                 </div>
               )}
               
-              {/* Dark Mode Toggle Button */}
-              <button
-                onClick={toggleDarkMode}
-                className={`flex items-center space-x-2 px-4 py-2 ${darkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'} rounded-lg transition duration-200 shadow-md hover:shadow-lg font-medium`}
-                title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              >
-                {darkMode ? (
-                  <>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <span className="font-semibold">Light</span>
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                    <span className="font-semibold">Dark</span>
-                  </>
-                )}
-              </button>
-              
               {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className={`flex items-center space-x-2 px-4 py-2 ${darkMode ? 'bg-red-900 text-red-200 hover:bg-red-800' : 'bg-red-500 text-white hover:bg-red-600'} rounded-lg transition duration-200 shadow-md hover:shadow-lg font-medium`}
+                className="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded-lg transition duration-200 shadow-md hover:shadow-lg font-medium"
                 title="Logout"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,28 +253,28 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className={`${darkMode ? 'bg-noir-900' : 'bg-white/80 backdrop-blur-xl'} rounded-2xl shadow-2xl p-8 border-2 ${darkMode ? 'border-noir-800' : 'border-gray-200'} transition-colors duration-300`}>
+        <div className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'border-noir-800' : 'border-gray-200'} transition-colors duration-300">
           <div className="mb-8">
-            <h2 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>Upload Educational Content</h2>
-            <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>Add PDFs or web resources organized by class, subject, and topic</p>
+            <h2 className="text-3xl font-bold bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">Upload Educational Content</h2>
+            <p className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">Add PDFs or web resources organized by class, subject, and topic</p>
           </div>
 
           {/* Success Message */}
           {success && (
-            <div className={`mb-6 p-4 ${darkMode ? 'bg-green-950 border-green-900' : 'bg-green-50 border-green-200'} border rounded-lg transition-colors duration-300`}>
+            <div className="mb-6 p-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
               <div className="flex items-center">
-                <svg className={`w-5 h-5 ${darkMode ? 'text-green-400' : 'text-green-500'} mr-2`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <p className={`${darkMode ? 'text-green-300' : 'text-green-600'} text-sm`}>{success}</p>
+                <p className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">{success}</p>
               </div>
             </div>
           )}
 
           {/* Error Message */}
           {error && (
-            <div className={`mb-6 p-4 ${darkMode ? 'bg-red-950 border-red-900' : 'bg-red-50 border-red-200'} border rounded-lg transition-colors duration-300`}>
-              <p className={`${darkMode ? 'text-red-300' : 'text-red-600'} text-sm`}>{error}</p>
+            <div className="mb-6 p-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+              <p className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">{error}</p>
             </div>
           )}
 
@@ -305,7 +282,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Class Dropdown */}
             <div>
-              <label htmlFor="class" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              <label htmlFor="class" className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                 Class <span className="text-red-500">*</span>
               </label>
               <select
@@ -313,7 +290,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                 name="class"
                 value={formData.class}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition duration-200`}
+                className="w-full px-4 py-3 border bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                 required
               >
                 <option value="">Select Class</option>
@@ -325,7 +302,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 
             {/* Subject Dropdown */}
             <div>
-              <label htmlFor="subject" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              <label htmlFor="subject" className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                 Subject <span className="text-red-500">*</span>
               </label>
               <select
@@ -333,7 +310,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition duration-200`}
+                className="w-full px-4 py-3 border bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                 required
               >
                 <option value="">Select Subject</option>
@@ -345,7 +322,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 
             {/* Topic Input */}
             <div>
-              <label htmlFor="topic" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              <label htmlFor="topic" className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                 Topic / Chapter Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -355,14 +332,14 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                 value={formData.topic}
                 onChange={handleChange}
                 placeholder="e.g., Algebra, Thermodynamics, Photosynthesis"
-                className={`w-full px-4 py-3 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white placeholder-gray-500 focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition duration-200`}
+                className="w-full px-4 py-3 border bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                 required
               />
             </div>
 
             {/* Upload Type Selection */}
             <div>
-              <label className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-3`}>
+              <label className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                 Upload Type <span className="text-red-500">*</span>
               </label>
               <div className="flex space-x-4">
@@ -373,9 +350,9 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                     value="pdf"
                     checked={formData.sourceType === 'pdf'}
                     onChange={handleChange}
-                    className={`w-4 h-4 ${darkMode ? 'text-white' : 'text-black'} focus:ring-offset-0`}
+                    className="w-4 h-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                   />
-                  <span className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>PDF Upload</span>
+                  <span className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">PDF Upload</span>
                 </label>
                 <label className="flex items-center space-x-2 cursor-pointer">
                   <input
@@ -384,9 +361,9 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                     value="web"
                     checked={formData.sourceType === 'web'}
                     onChange={handleChange}
-                    className={`w-4 h-4 ${darkMode ? 'text-white' : 'text-black'} focus:ring-offset-0`}
+                    className="w-4 h-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                   />
-                  <span className={`${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Web URL</span>
+                  <span className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">Web URL</span>
                 </label>
               </div>
             </div>
@@ -394,15 +371,15 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
             {/* Conditional Upload Fields */}
             {formData.sourceType === 'pdf' ? (
               <div>
-                <label htmlFor="fileInput" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                <label htmlFor="fileInput" className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                   Select PDF File <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center justify-center w-full">
-                  <label className={`w-full flex flex-col items-center px-4 py-6 ${darkMode ? 'bg-noir-800 border-noir-700 hover:bg-noir-750' : 'bg-white border-gray-300 hover:bg-gray-50'} border-2 border-dashed rounded-lg cursor-pointer transition duration-200`}>
-                    <svg className={`w-12 h-12 ${darkMode ? 'text-gray-500' : 'text-gray-400'} mb-3`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <label className="w-full flex flex-col items-center px-4 py-6 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
+                    <svg className="w-12 h-12 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
-                    <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <span className="text-sm bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                       {formData.file ? formData.file.name : 'Click to upload PDF or drag and drop'}
                     </span>
                     <input
@@ -417,7 +394,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
               </div>
             ) : (
               <div>
-                <label htmlFor="url" className={`block text-sm font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                <label htmlFor="url" className="block text-sm font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                   Web URL <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -427,7 +404,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
                   value={formData.url}
                   onChange={handleChange}
                   placeholder="https://example.com/resource"
-                  className={`w-full px-4 py-3 border ${darkMode ? 'bg-noir-800 border-noir-700 text-white placeholder-gray-500 focus:ring-white focus:border-white' : 'bg-white border-gray-300 text-gray-900 focus:ring-black focus:border-black'} rounded-lg focus:ring-2 transition duration-200`}
+                  className="w-full px-4 py-3 border bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50"
                 />
               </div>
             )}
@@ -437,11 +414,11 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex-1 ${darkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-gradient-to-r from-gray-900 to-black text-white hover:from-gray-800 hover:to-gray-900'} py-3 px-6 rounded-xl font-bold focus:outline-none focus:ring-2 ${darkMode ? 'focus:ring-white' : 'focus:ring-gray-900'} focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl`}
+                className="flex-1 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'focus:ring-white' : 'focus:ring-gray-900'} focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
-                    <svg className={`animate-spin -ml-1 mr-3 h-5 w-5 ${darkMode ? 'text-black' : 'text-white'}`} fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -455,7 +432,7 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
               <button
                 type="button"
                 onClick={handleViewHistory}
-                className={`flex-1 ${darkMode ? 'bg-noir-800 text-gray-300 hover:bg-noir-700 border-2 border-noir-700' : 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-2 border-gray-300'} py-3 px-6 rounded-xl font-bold focus:outline-none focus:ring-2 ${darkMode ? 'focus:ring-white' : 'focus:ring-gray-400'} focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl`}
+                className="flex-1 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'focus:ring-white' : 'focus:ring-gray-400'} focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {showHistory ? 'Hide History' : 'View History'}
               </button>
@@ -465,51 +442,51 @@ const AdminDashboard = ({ onLogout, darkMode, toggleDarkMode }) => {
 
         {/* Upload History Section */}
         {showHistory && (
-          <div className={`mt-8 ${darkMode ? 'bg-noir-900' : 'bg-white/80 backdrop-blur-xl'} rounded-2xl shadow-2xl p-8 border-2 ${darkMode ? 'border-noir-800' : 'border-gray-200'} transition-colors duration-300`}>
-            <h3 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-6`}>Upload History</h3>
+          <div className="mt-8 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50'border-noir-800' : 'border-gray-200'} transition-colors duration-300">
+            <h3 className="text-2xl font-bold bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">Upload History</h3>
             
             {loadingHistory ? (
               <div className="flex justify-center items-center py-12">
-                <svg className={`animate-spin h-8 w-8 ${darkMode ? 'text-white' : 'text-black'}`} fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin h-8 w-8 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
               </div>
             ) : uploadHistory.length === 0 ? (
               <div className="text-center py-12">
-                <svg className={`mx-auto h-12 w-12 ${darkMode ? 'text-gray-600' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="mx-auto h-12 w-12 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <p className={`mt-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>No upload history available</p>
+                <p className="mt-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">No upload history available</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {uploadHistory.map((item, index) => (
-                  <div key={index} className={`border ${darkMode ? 'border-noir-700 hover:bg-noir-800' : 'border-gray-200 hover:shadow-md'} rounded-lg p-4 transition duration-200`}>
+                  <div key={index} className="border bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${darkMode ? 'bg-noir-800 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                             Class {item.class}
                           </span>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${darkMode ? 'bg-noir-800 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                             {item.subject}
                           </span>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${darkMode ? 'bg-noir-800 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                             {item.source_type}
                           </span>
                         </div>
-                        <h4 className={`text-lg font-semibold ${darkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{item.topic}</h4>
-                        <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} truncate`}>{item.url_or_filename}</p>
+                        <h4 className="text-lg font-semibold bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">{item.topic}</h4>
+                        <p className="text-sm bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">{item.url_or_filename}</p>
                         {item.upload_date && (
-                          <p className={`text-xs ${darkMode ? 'text-gray-500' : 'text-gray-400'} mt-1`}>
+                          <p className="text-xs bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50">
                             Uploaded: {new Date(item.upload_date).toLocaleString()}
                           </p>
                         )}
                       </div>
                       <div className="ml-4">
                         {item.source_type === 'pdf' ? (
-                          <svg className={`w-8 h-8 ${darkMode ? 'text-gray-400' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-8 h-8 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                           </svg>
                         ) : (
