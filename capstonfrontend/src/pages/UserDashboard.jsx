@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createThread, getHomeThreads, getThreadMessages, sendUserQuery, getTopics } from '../utils/api';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import VoiceInput from '../components/VoiceInput';
 
 const UserDashboard = ({ onLogout }) => {
   const [threads, setThreads] = useState([]);
@@ -40,6 +41,11 @@ const UserDashboard = ({ onLogout }) => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleVoiceTranscript = (transcript) => {
+    // Set the transcript as the message input
+    setMessageInput(transcript);
   };
 
   const loadThreads = async () => {
@@ -493,15 +499,22 @@ const UserDashboard = ({ onLogout }) => {
 
             {/* Message Input */}
             <div className="bg-white border-t border-gray-200 p-5 shadow-strong">
-              <form onSubmit={handleSendMessage} className="flex space-x-4">
+              <form onSubmit={handleSendMessage} className="flex space-x-3">
                 <input
                   type="text"
                   value={messageInput}
                   onChange={(e) => setMessageInput(e.target.value)}
-                  placeholder="Ask a question..."
+                  placeholder="Ask a question or use voice input..."
                   disabled={sendingMessage}
                   className="flex-1 px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] placeholder-[#64748B] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] disabled:opacity-50 disabled:bg-gray-50 transition-all duration-200 shadow-soft"
                 />
+                
+                {/* Voice Input Button */}
+                <VoiceInput 
+                  onTranscript={handleVoiceTranscript}
+                  disabled={sendingMessage}
+                />
+                
                 <button
                   type="submit"
                   disabled={!messageInput.trim() || sendingMessage}
