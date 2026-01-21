@@ -48,6 +48,13 @@ const UserDashboard = ({ onLogout }) => {
     setMessageInput(transcript);
   };
 
+  const handleSuggestionSelect = (suggestion) => {
+    // Set the selected suggestion as the message input
+    setMessageInput(suggestion);
+    // Optionally auto-focus the input field
+    // You can add a ref to the input if you want to focus it
+  };
+
   const loadThreads = async () => {
     setThreadsLoading(true);
     setError('');
@@ -496,6 +503,15 @@ const UserDashboard = ({ onLogout }) => {
                 <p className="text-[#DC2626] text-sm font-medium">{error}</p>
               </div>
             )}
+
+            {/* Smart Suggestions - Component not yet implemented */}
+            {/* {activeThread && !sendingMessage && (
+              <SmartSuggestions 
+                topic={activeThread.topic}
+                subject={activeThread.subject}
+                onSelect={handleSuggestionSelect}
+              />
+            )} */}
 
             {/* Message Input */}
             <div className="bg-white border-t border-gray-200 p-5 shadow-strong">
