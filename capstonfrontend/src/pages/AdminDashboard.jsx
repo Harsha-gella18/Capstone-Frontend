@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { uploadContent, getUploadHistory } from '../utils/api';
+import { uploadContent, getAdminHistory } from '../utils/api';
 
 const AdminDashboard = ({ onLogout }) => {
   const [formData, setFormData] = useState({
@@ -184,8 +184,19 @@ const AdminDashboard = ({ onLogout }) => {
     setError('');
 
     try {
-      const history = await getUploadHistory();
-      setUploadHistory(Array.isArray(history) ? history : []);
+      // Get email from userData
+      const email = userData?.email;
+      if (!email) {
+        throw new Error('User email not found. Please login again.');
+      }
+
+      const response = await getAdminHistory(email);
+      
+      if (response.success) {
+        setUploadHistory(Array.isArray(response.history) ? response.history : []);
+      } else {
+        throw new Error('Failed to fetch history from server');
+      }
     } catch (err) {
       console.error('Error fetching history:', err);
       setError(err.message || 'Failed to fetch upload history');
@@ -534,7 +545,11 @@ const AdminDashboard = ({ onLogout }) => {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {uploadHistory.map((item, index) => (
+                  {uploadHistory.map((item, index) => {
+                    // Determine source type from file_source
+                    const sourceType = item.file_source && item.file_source.startsWith('http') ? 'web' : 'pdf';
+                    
+                    return (
                     <div key={index} className="group p-5 border border-gray-200 rounded-xl hover:border-indigo-300 hover:shadow-md transition-all duration-200 bg-gradient-to-br from-white to-gray-50">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
@@ -552,7 +567,7 @@ const AdminDashboard = ({ onLogout }) => {
                               {item.subject}
                             </span>
                             <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-gradient-to-r from-purple-100 to-purple-200 text-purple-700">
-                              {item.source_type === 'pdf' ? (
+                              {sourceType === 'pdf' ? (
                                 <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                                 </svg>
@@ -561,7 +576,7 @@ const AdminDashboard = ({ onLogout }) => {
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                 </svg>
                               )}
-                              {item.source_type.toUpperCase()}
+                              {sourceType.toUpperCase()}
                             </span>
                           </div>
                           <h4 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-200">{item.topic}</h4>
@@ -569,14 +584,14 @@ const AdminDashboard = ({ onLogout }) => {
                             <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
-                            {item.url_or_filename}
+                            {item.file_source}
                           </p>
-                          {item.upload_date && (
+                          {item.created_at && (
                             <p className="text-xs text-gray-500 flex items-center">
                               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
-                              {new Date(item.upload_date).toLocaleString('en-US', {
+                              {new Date(item.created_at).toLocaleString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
                                 day: 'numeric',
@@ -585,10 +600,18 @@ const AdminDashboard = ({ onLogout }) => {
                               })}
                             </p>
                           )}
+                          {item.created_by && (
+                            <p className="text-xs text-indigo-600 mt-1 flex items-center">
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                              {item.created_by.replace('ADMIN#', '')}
+                            </p>
+                          )}
                         </div>
                         <div className="ml-4 flex-shrink-0">
                           <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center group-hover:from-indigo-200 group-hover:to-purple-200 transition-colors duration-200">
-                            {item.source_type === 'pdf' ? (
+                            {sourceType === 'pdf' ? (
                               <svg className="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
                               </svg>
@@ -601,7 +624,8 @@ const AdminDashboard = ({ onLogout }) => {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  );
+                  })}
                 </div>
               )}
             </div>

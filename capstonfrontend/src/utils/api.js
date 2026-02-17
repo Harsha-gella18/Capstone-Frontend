@@ -168,6 +168,61 @@ export const getUploadHistory = async () => {
   }
 };
 
+// Admin Module - Get Admin History from Lambda
+export const getAdminHistory = async (email) => {
+  if (!email) {
+    throw new Error('Email is required to fetch history.');
+  }
+
+  const url = `https://kkmcisey3k.execute-api.eu-north-1.amazonaws.com/Admin_history?email=${encodeURIComponent(email)}`;
+  
+  const config = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json'
+    }
+  };
+
+  try {
+    const response = await fetch(url, config);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch history: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    
+    // Parse the body if it's a string (Lambda response format)
+    if (data.body && typeof data.body === 'string') {
+      const parsedBody = JSON.parse(data.body);
+      return {
+        success: parsedBody.success,
+        count: parsedBody.count || 0,
+        history: parsedBody.history || []
+      };
+    }
+    
+    // If body is already an object
+    if (data.body && typeof data.body === 'object') {
+      return {
+        success: data.body.success,
+        count: data.body.count || 0,
+        history: data.body.history || []
+      };
+    }
+    
+    // If data is directly the response
+    return {
+      success: data.success,
+      count: data.count || 0,
+      history: data.history || []
+    };
+  } catch (error) {
+    console.error('Error fetching admin history:', error);
+    throw new Error(`Failed to fetch admin history: ${error.message}`);
+  }
+};
+
 // User Dashboard - Thread Management APIs
 
 // Get topics based on class and subject

@@ -3,6 +3,7 @@ import { createThread, getHomeThreads, getThreadMessages, sendUserQuery, getTopi
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import VoiceInput from '../components/VoiceInput';
+import SmartSuggestions from '../components/SmartSuggestions';
 
 const UserDashboard = ({ onLogout }) => {
   const [threads, setThreads] = useState([]);
@@ -504,14 +505,14 @@ const UserDashboard = ({ onLogout }) => {
               </div>
             )}
 
-            {/* Smart Suggestions - Component not yet implemented */}
-            {/* {activeThread && !sendingMessage && (
+            {/* Smart Suggestions */}
+            {activeThread && !sendingMessage && (
               <SmartSuggestions 
                 topic={activeThread.topic}
                 subject={activeThread.subject}
                 onSelect={handleSuggestionSelect}
               />
-            )} */}
+            )}
 
             {/* Message Input */}
             <div className="bg-white border-t border-gray-200 p-5 shadow-strong">
