@@ -15,7 +15,9 @@ const UserDashboard = ({ onLogout }) => {
   const [userData, setUserData] = useState(null);
   const [messageInput, setMessageInput] = useState('');
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
   const messagesEndRef = useRef(null);
+  const messageInputRef = useRef(null);
 
   // Class and subject options
   const classOptions = Array.from({ length: 10 }, (_, i) => (i + 1).toString());
@@ -46,6 +48,56 @@ const UserDashboard = ({ onLogout }) => {
   const handleVoiceTranscript = (transcript) => {
     // Set the transcript as the message input
     setMessageInput(transcript);
+  };
+
+  const normalizeText = (value) => (value || '').toLowerCase();
+
+  const getTopicSuggestions = (active) => {
+    if (!active?.topic) return [];
+    const topicLabel = active.topic.trim();
+    if (!topicLabel) return [];
+
+    return [
+      `Explain ${topicLabel} in simple words`,
+      `Summarize ${topicLabel}`,
+      `Give an example of ${topicLabel}`,
+      `Explain ${topicLabel} step by step`,
+      `List key points about ${topicLabel}`,
+      `Give a real-world application of ${topicLabel}`
+    ];
+  };
+
+  const buildSmartSuggestions = (inputText, active) => {
+    const baseCandidates = getTopicSuggestions(active);
+    const keywordSuggestions = [
+      { keywords: ['formula', 'equation', 'derive', 'derivation'], suggestions: ['Show the formula', 'Derive it step by step', 'Explain each variable'] },
+      { keywords: ['example', 'sample', 'practice'], suggestions: ['Give a worked example', 'Provide a practice question', 'Show the final answer', 'Give another example'] },
+      { keywords: ['difference', 'compare', 'vs', 'versus'], suggestions: ['Compare the two concepts', 'List similarities and differences', 'Give a quick summary', 'Create a comparison table'] },
+      { keywords: ['define', 'definition', 'meaning'], suggestions: ['Give a short definition', 'Explain in simple words', 'List key terms', 'Give a one-line definition'] },
+      { keywords: ['steps', 'process', 'procedure'], suggestions: ['Explain step by step', 'Outline the process', 'Summarize the workflow', 'List the steps clearly'] },
+      { keywords: ['why', 'reason', 'cause'], suggestions: ['Explain the reason', 'Describe the cause', 'Give an intuitive explanation'] },
+      { keywords: ['how', 'method', 'solve'], suggestions: ['Show the method', 'Explain how to solve it', 'Walk through the solution'] },
+      { keywords: ['important', 'key', 'main'], suggestions: ['List key points', 'Highlight the main idea', 'Summarize the essentials'] }
+    ];
+
+    const text = normalizeText(inputText);
+    const results = new Set();
+
+    baseCandidates.forEach((item) => results.add(item));
+
+    keywordSuggestions.forEach((group) => {
+      const matches = group.keywords.some((keyword) => text.includes(keyword));
+      if (matches) {
+        group.suggestions.forEach((item) => results.add(item));
+      }
+    });
+
+    return Array.from(results).slice(0, 6);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setMessageInput(suggestion);
+    messageInputRef.current?.focus();
   };
 
   const loadThreads = async () => {
@@ -156,6 +208,13 @@ const UserDashboard = ({ onLogout }) => {
       onLogout();
     }
   };
+
+  useEffect(() => {
+    const lastUserMessage = [...messages].reverse().find((msg) => msg.sender === 'user')?.message;
+    const seedText = messageInput.trim() || lastUserMessage || activeThread?.topic || '';
+    const nextSuggestions = buildSmartSuggestions(seedText, activeThread);
+    setSuggestions(nextSuggestions);
+  }, [messageInput, messages, activeThread]);
 
   return (
     <div className="flex flex-col h-screen bg-[#F8FAFC]">
@@ -499,6 +558,20 @@ const UserDashboard = ({ onLogout }) => {
 
             {/* Message Input */}
             <div className="bg-white border-t border-gray-200 p-5 shadow-strong">
+              {suggestions.length > 0 && (
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#F1F5F9] text-[#334155] border border-gray-200 hover:bg-[#E2E8F0] transition-colors"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
               <form onSubmit={handleSendMessage} className="flex space-x-3">
                 <input
                   type="text"
@@ -506,6 +579,7 @@ const UserDashboard = ({ onLogout }) => {
                   onChange={(e) => setMessageInput(e.target.value)}
                   placeholder="Ask a question or use voice input..."
                   disabled={sendingMessage}
+                  ref={messageInputRef}
                   className="flex-1 px-4 py-3 border-2 border-gray-200 bg-white text-[#334155] placeholder-[#64748B] rounded-xl focus:outline-none focus:border-[#2563EB] focus:ring-2 focus:ring-[#DBEAFE] disabled:opacity-50 disabled:bg-gray-50 transition-all duration-200 shadow-soft"
                 />
                 

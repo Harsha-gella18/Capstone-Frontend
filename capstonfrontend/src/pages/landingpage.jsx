@@ -75,8 +75,8 @@ const LandingPage = ({ onAuthSuccess }) => {
             </div>
           </div>
           <p className="mt-8 text-xl text-[#64748B] max-w-3xl mx-auto leading-relaxed font-medium">
-            Experience personalized education powered by advanced AI. Get instant answers, 
-            adaptive learning paths, and 24/7 academic support in an elegantly designed platform.
+            Meet EduBot - Your intelligent learning companion powered by advanced AI. Ask questions in natural language, 
+            get instant explanations, and unlock personalized learning paths designed just for you.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row justify-center gap-6">
             <button
@@ -91,6 +91,150 @@ const LandingPage = ({ onAuthSuccess }) => {
             >
               Already have an account?
             </button>
+          </div>
+        </div>
+
+        {/* Bot Showcase Section */}
+        <div className="mt-32 relative">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text */}
+            <div>
+              <h2 className="text-4xl font-heading font-black text-[#0F172A] mb-6 leading-tight">
+                Meet EduBot: Your AI-Powered Learning Companion
+              </h2>
+              <p className="text-lg text-[#64748B] mb-6 leading-relaxed">
+                EduBot is an intelligent educational assistant designed to revolutionize how you learn. 
+                Using state-of-the-art natural language processing and machine learning, our bot understands 
+                your questions and provides comprehensive, personalized explanations.
+              </p>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center text-[#0F172A] font-semibold">
+                  <span className="w-6 h-6 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-sm mr-4 font-bold">✓</span>
+                  Natural language conversations - just ask anything
+                </li>
+                <li className="flex items-center text-[#0F172A] font-semibold">
+                  <span className="w-6 h-6 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-sm mr-4 font-bold">✓</span>
+                  Multi-subject expertise across all academic disciplines
+                </li>
+                <li className="flex items-center text-[#0F172A] font-semibold">
+                  <span className="w-6 h-6 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-sm mr-4 font-bold">✓</span>
+                  Step-by-step problem solving with detailed explanations
+                </li>
+                <li className="flex items-center text-[#0F172A] font-semibold">
+                  <span className="w-6 h-6 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-sm mr-4 font-bold">✓</span>
+                  Learns your preferences for truly personalized education
+                </li>
+              </ul>
+              <button
+                onClick={handleShowSignup}
+                className="bg-gradient-to-r from-[#2563EB] to-[#1E40AF] text-white px-8 py-4 rounded-2xl font-bold shadow-medium transition-all duration-300 hover:shadow-strong hover:-translate-y-1"
+              >
+                Start Chatting with EduBot
+              </button>
+            </div>
+
+            {/* Right side - Image */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] blur-2xl opacity-20 rounded-3xl group-hover:opacity-30 transition-opacity duration-300"></div>
+              <div className="relative bg-gradient-to-br from-white to-[#F8FAFC] p-8 rounded-3xl shadow-strong border border-gray-200 overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-[#DBEAFE] to-transparent rounded-full -mr-16 -mt-16 opacity-50"></div>
+                <div className="relative aspect-video bg-gradient-to-br from-[#DBEAFE] to-[#E0E7FF] rounded-2xl flex items-center justify-center">
+                  <div className="text-center">
+                    <svg className="w-24 h-24 mx-auto text-[#2563EB] mb-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <p className="text-[#0F172A] font-bold text-lg">EduBot in Action</p>
+                    <p className="text-[#64748B] text-sm mt-2">Add your bot interface screenshot here</p>
+                  </div>
+                </div>
+                <div className="mt-6 space-y-3">
+                  <div className="bg-white p-3 rounded-lg shadow-soft flex items-start">
+                    <div className="w-8 h-8 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-xs font-bold mr-3 flex-shrink-0">U</div>
+                    <p className="text-sm text-[#0F172A] font-medium">How do I solve quadratic equations?</p>
+                  </div>
+                  <div className="bg-[#DBEAFE] p-3 rounded-lg shadow-soft flex items-start ml-6">
+                    <div className="w-8 h-8 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center text-white text-xs font-bold mr-3 flex-shrink-0">E</div>
+                    <p className="text-sm text-[#0F172A]">Great question! Let me explain step by step...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* How It Works Section */}
+        <div className="mt-32">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-heading font-black text-[#0F172A] mb-4">
+              How EduBot Works
+            </h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-[#2563EB] to-[#1E40AF] mx-auto rounded-full"></div>
+          </div>
+          <div className="grid md:grid-cols-4 gap-6 mb-16">
+            {/* Step 1 */}
+            <div className="relative">
+              <div className="group relative bg-white p-8 rounded-2xl shadow-soft hover:shadow-strong transition-all duration-300 border border-gray-200 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#DBEAFE] to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center mb-4 shadow-medium text-white font-bold text-lg">1</div>
+                  <h3 className="text-xl font-heading font-bold text-[#0F172A] mb-3">Ask Your Question</h3>
+                  <p className="text-[#64748B] leading-relaxed">
+                    Type your question in natural language - no special formatting needed.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden md:block absolute -right-3 top-1/2 transform translate-x-full">
+                <svg className="w-6 h-6 text-[#2563EB]" fill="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative">
+              <div className="group relative bg-white p-8 rounded-2xl shadow-soft hover:shadow-strong transition-all duration-300 border border-gray-200 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#DBEAFE] to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center mb-4 shadow-medium text-white font-bold text-lg">2</div>
+                  <h3 className="text-xl font-heading font-bold text-[#0F172A] mb-3">Bot Processes</h3>
+                  <p className="text-[#64748B] leading-relaxed">
+                    Our AI analyzes your question and searches its knowledge base.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden md:block absolute -right-3 top-1/2 transform translate-x-full">
+                <svg className="w-6 h-6 text-[#2563EB]" fill="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative">
+              <div className="group relative bg-white p-8 rounded-2xl shadow-soft hover:shadow-strong transition-all duration-300 border border-gray-200 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#DBEAFE] to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center mb-4 shadow-medium text-white font-bold text-lg">3</div>
+                  <h3 className="text-xl font-heading font-bold text-[#0F172A] mb-3">Get Answer</h3>
+                  <p className="text-[#64748B] leading-relaxed">
+                    Receive a detailed, personalized explanation tailored to your level.
+                  </p>
+                </div>
+              </div>
+              <div className="hidden md:block absolute -right-3 top-1/2 transform translate-x-full">
+                <svg className="w-6 h-6 text-[#2563EB]" fill="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="relative">
+              <div className="group relative bg-white p-8 rounded-2xl shadow-soft hover:shadow-strong transition-all duration-300 border border-gray-200 h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#DBEAFE] to-transparent opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-full flex items-center justify-center mb-4 shadow-medium text-white font-bold text-lg">4</div>
+                  <h3 className="text-xl font-heading font-bold text-[#0F172A] mb-3">Learn & Grow</h3>
+                  <p className="text-[#64748B] leading-relaxed">
+                    Ask follow-ups and deepen your understanding at your own pace.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

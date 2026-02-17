@@ -123,37 +123,43 @@ const Login = ({ onAuthSuccess, onBack, onSwitchToSignup }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-strong border border-gray-200 p-10 relative overflow-hidden">
-        {/* Decorative element */}
-        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#2563EB] to-[#1E40AF]"></div>
-        
-        {/* Header */}
-        <div className="text-center mb-10">
-          <button
-            onClick={onBack}
-            className="absolute top-6 left-6 text-[#64748B] hover:text-[#0F172A] transition duration-200"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-4xl font-heading font-black text-[#0F172A] mb-3 tracking-tight">EduBot</h1>
-          <h2 className="text-2xl font-heading font-bold text-[#0F172A] mb-2">Welcome Back!</h2>
-          <p className="text-[#64748B] font-medium">Sign in to continue your learning journey</p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#EDEEF3] via-[#F5F7FB] to-[#FFFBFE] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-[32px] shadow-2xl overflow-hidden border border-gray-100">
+          {/* Left Side - Login Form */}
+          <div className="p-12 lg:p-16 flex flex-col justify-center">
+            {/* Back Button */}
+            <button
+              onClick={onBack}
+              className="self-start text-[#9CA3AF] hover:text-[#7C3AED] transition duration-300 mb-10 p-2 hover:bg-purple-50 rounded-lg"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Header */}
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold text-[#0F172A] mb-3 tracking-tight">Welcome Back</h2>
+              <p className="text-[#6B7280] font-medium text-lg">Access your learning dashboard</p>
+            </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-[#FEE2E2] border-l-4 border-[#DC2626] rounded-xl">
-            <p className="text-[#DC2626] text-sm font-medium">{error}</p>
+          <div className="mb-8 p-4 bg-gradient-to-r from-[#FEE2E2] to-[#FEF2F2] border border-[#FECACA] rounded-2xl shadow-sm">
+            <div className="flex items-start">
+              <svg className="w-5 h-5 text-[#DC2626] mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+              </svg>
+              <p className="text-[#991B1B] text-sm font-semibold">{error}</p>
+            </div>
           </div>
         )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-[#0F172A] mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-[#1F2937] mb-3">
               Email Address
             </label>
             <input
@@ -163,13 +169,13 @@ const Login = ({ onAuthSuccess, onBack, onSwitchToSignup }) => {
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-4 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
-              placeholder="Enter your email"
+              className="w-full px-5 py-3.5 bg-gradient-to-br from-[#FAFBFC] to-[#F3F4F6] border-2 border-[#E5E7EB] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:ring-offset-2 focus:border-[#7C3AED] transition duration-200 text-[#1F2937] placeholder-[#9CA3AF] font-medium shadow-sm"
+              placeholder="you@company.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-[#0F172A] mb-2">
+            <label htmlFor="password" className="block text-sm font-semibold text-[#1F2937] mb-3">
               Password
             </label>
             <input
@@ -179,26 +185,26 @@ const Login = ({ onAuthSuccess, onBack, onSwitchToSignup }) => {
               autoComplete="current-password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-4 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#DBEAFE] focus:border-[#2563EB] transition duration-200 text-[#334155] placeholder-[#64748B] font-medium"
-              placeholder="Enter your password"
+              className="w-full px-5 py-3.5 bg-gradient-to-br from-[#FAFBFC] to-[#F3F4F6] border-2 border-[#E5E7EB] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:ring-offset-2 focus:border-[#7C3AED] transition duration-200 text-[#1F2937] placeholder-[#9CA3AF] font-medium shadow-sm"
+              placeholder="••••••••"
             />
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pt-2 mb-8">
             <div className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-[#2563EB] focus:ring-[#2563EB] border-gray-300 rounded"
+                className="h-5 w-5 text-[#7C3AED] focus:ring-[#7C3AED] border-[#D1D5DB] rounded-lg cursor-pointer"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-[#334155] font-medium">
-                Remember me
+              <label htmlFor="remember-me" className="ml-3 block text-sm text-[#4B5563] font-medium cursor-pointer">
+                Keep me signed in
               </label>
             </div>
             <button
               type="button"
-              className="text-sm text-[#2563EB] hover:text-[#1E40AF] transition duration-200 font-semibold"
+              className="text-sm text-[#7C3AED] hover:text-[#6D28D9] transition duration-200 font-semibold hover:underline"
             >
               Forgot password?
             </button>
@@ -207,12 +213,12 @@ const Login = ({ onAuthSuccess, onBack, onSwitchToSignup }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#2563EB] to-[#1E40AF] hover:shadow-strong disabled:opacity-50 text-white py-4 px-4 rounded-xl font-bold text-lg transition-all duration-200 shadow-medium"
+            className="w-full bg-gradient-to-br from-[#7C3AED] to-[#6D28D9] hover:from-[#6D28D9] hover:to-[#5B21B6] disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 px-4 rounded-2xl font-bold text-base transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             {loading ? (
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
-                Signing In...
+                Signing in...
               </div>
             ) : (
               'Sign In'
@@ -221,16 +227,66 @@ const Login = ({ onAuthSuccess, onBack, onSwitchToSignup }) => {
         </form>
 
         {/* Sign Up Link */}
-        <div className="mt-10 text-center">
-          <p className="text-[#64748B] font-medium">
+        <div className="mt-8 pt-8 border-t border-[#E5E7EB] text-center">
+          <p className="text-[#6B7280] font-medium">
             Don't have an account?{' '}
             <button
               onClick={onSwitchToSignup}
-              className="text-[#2563EB] hover:text-[#1E40AF] font-bold transition duration-200 underline underline-offset-2"
+              className="text-[#7C3AED] hover:text-[#6D28D9] font-bold transition duration-200 hover:underline"
             >
-              Sign up now
+              Sign up
             </button>
           </p>
+        </div>
+          </div>
+
+          {/* Right Side - Welcome Message with Gradient Background */}
+          <div className="hidden lg:flex lg:flex-col lg:justify-between relative bg-gradient-to-br from-[#6D28D9] via-[#7C3AED] to-[#5B21B6] p-16 text-white overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full -mr-[250px] -mt-[250px] blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/5 rounded-full -ml-[200px] -mb-[200px] blur-3xl"></div>
+            <div className="absolute top-1/2 right-1/4 w-[300px] h-[300px] bg-white/10 rounded-full blur-3xl"></div>
+            
+            <div className="relative z-10">
+              <div className="mb-6 inline-block bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+                <span className="text-sm font-semibold text-white/90">Premium Learning Experience</span>
+              </div>
+              <h2 className="text-5xl font-bold mb-6 leading-tight tracking-tight">Welcome Back to Your Learning</h2>
+              <p className="text-white/80 text-lg leading-relaxed max-w-lg font-medium">
+                Continue your educational journey with personalized AI assistance, unlimited questions, and real-time learning insights.
+              </p>
+            </div>
+
+            <div className="relative z-10 space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/10 backdrop-blur-md">
+                    <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">Instant Answers</h3>
+                  <p className="text-white/70 text-sm">Get responses to any question in seconds</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/10 backdrop-blur-md">
+                    <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold mb-1">24/7 Support</h3>
+                  <p className="text-white/70 text-sm">Learn anytime, anywhere at your own pace</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
